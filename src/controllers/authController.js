@@ -4,21 +4,6 @@ const prisma = require("../database/prisma");
 const bcrypt = require("bcrypt");
 const { signToken, verifyToken } = require("../utils/jwtUtils");
 
-const register = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return next(new AppError("Email and password required", 400));
-  }
-  const hashed = await bcrypt.hash(password, 12);
-  const user = await prisma.user.create({
-    data: { email, password: hashed },
-  });
-  res.status(201).json({
-    status: "success",
-    data: { user: { id: user.id, email: user.email } },
-  });
-});
-
 const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password)
@@ -76,7 +61,6 @@ const logout = catchAsync(async (req, res, next) => {
 });
 
 module.exports = {
-  register,
   login,
   validate,
   changePassword,
