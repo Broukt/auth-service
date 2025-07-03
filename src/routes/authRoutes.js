@@ -6,12 +6,25 @@ const {
   logout,
   changePassword,
 } = require("../controllers/authController");
-const extractToken = require("../middlewares/tokenExtractor");
-const catchAsync = require("../utils/catchAsync");
+const {
+  validateBody,
+  validateParams,
+} = require("../middlewares/validateMiddleware");
+const {
+  loginSchema,
+  changePasswordSchema,
+  validateTokenSchema,
+  idParamValidator,
+} = require("../validators/authValidator");
 
-router.post("/auth/login", login);
-router.post("/auth/validate", validate);
-router.post("/auth/logout", extractToken, logout);
-router.patch("/auth/usuarios/:id", catchAsync(changePassword));
+router.post("/login", validateBody(loginSchema), login);
+router.post("/validate", validateBody(validateTokenSchema), validate);
+router.post("/logout", validateBody(validateTokenSchema), logout);
+router.patch(
+  "/usuarios/:id",
+  validateParams(idParamValidator),
+  validateBody(changePasswordSchema),
+  changePassword
+);
 
 module.exports = router;
