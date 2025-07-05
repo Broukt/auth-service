@@ -64,7 +64,7 @@ npx prisma db push
 npm start
 ```
 
-El servidor se iniciará en el puerto **4000** (o en el puerto definido en la variable de entorno `PORT`). Accede a la API mediante `http://localhost:3000`.
+El servidor se iniciará en el puerto **4000** (o en el puerto definido en la variable de entorno `PORT`). Accede a la API mediante `http://localhost:4000`.
 
 ## Seeder
 
